@@ -97,6 +97,19 @@
 \end{itemize}
 \end{frame}
 
+\section{Physical Circuit Overview}
+
+\begin{frame}{Physical Circuit Overview}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth, height=0.7\textheight, keepaspectratio]{physical_cirucit.png}
+    \caption{Theremin Circuit Schematic (Physical)}
+    \label{fig:physical_circuit_overview}
+\end{figure}
+\vspace{-1em}
+\end{frame}
+
+
 \section{Variable Oscillator (Pitch Control)}
 
 \begin{frame}{Variable Oscillator (Pitch Control)}
@@ -119,17 +132,25 @@
 \begin{itemize}
     \item \textbf{Oscillation Frequency ($f_o$)}:
     \begin{align*}
-    f_o = \frac{1}{2\pi R C} \approx \frac{1}{2\pi (100k)(100p)} \approx \SI{15.92}{\kilo\hertz}
+      f_o = \frac{1}{2R C ln\frac{1+k}{1-k}} \approx \frac{1}{2(120k)(175p)\cdot ln(3)} \approx \SI{21.92}{\kilo\hertz}
+      \\\\ \text{where} k = \frac{R2}{R1+R2}  
     \end{align*}
     \item \textbf{Total Capacitance ($C_{total}$)}:
     \begin{align*}
-    C_{total} = C_{base} + C_{hand} = 23p + C_{hand}
+    C_{total} = C_{base} + C_{hand} = 60p + C_{hand}
     \end{align*}
     \item As $C_{hand}$ increases, $f_o$ decreases.
     \item \textbf{Capacitance Change}:
     \begin{align*}
     C_{hand} = \frac{C_{base}}{(1 - \frac{f_o}{f_{max}})} - C_{base}
     \end{align*}
+    % result from physical circuits
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{variable.jpeg}
+        \caption{Variable Oscillator Output}
+        \label{fig:Variable_Oscillator}
+    \end{figure}     
 \end{itemize}
 
 \section{Fixed Oscillator (Reference)}
@@ -144,6 +165,11 @@
         \item Frequency Determining Network: R18=\SI{6.3}{\kilo\ohm}, C4=\SI{1}{\nano\farad}, R19=\SI{6.3}{\kilo\ohm}, C6=\SI{1}{\nano\farad}
         \item Gain Setting Network: R16=\SI{47}{\kilo\ohm}, R17=\SI{100}{\kilo\ohm}
     \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fixed Oscillator (Reference) - Calculations}
+\begin{itemize}
     \item \textbf{Calculation}:
     \begin{itemize}
         \item Oscillation Frequency ($f_o$):
@@ -152,8 +178,19 @@
         \end{align*}
         \item Required Gain ($A_v$): $A_v \approx 2.13$
     \end{itemize}
-     \item \textbf{Note}: The frequency (\SI{\sim 25}{\kilo\hertz}) is lower than typical Theremin RF oscillators.But because our relaxation oscillator is working at around 19KHz, we are using this frequency to get a better sound.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Fixed Oscillator (Reference) - Output}
+\begin{itemize}
+    \item \textbf{Note}: The frequency (\SI{\sim 25}{\kilo\hertz}) is lower than typical Theremin RF oscillators.But because our relaxation oscillator is working at around 21KHz, we are using this frequency to get a better sound.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.9 \textwidth]{fixed.jpeg}
+    \caption{Fixed Oscillator Output}
+    \label{fig:Fixed_Oscillator}
+\end{figure}
 \end{frame}
 
 \section{Mixer (Summing Amplifier)}
@@ -184,8 +221,19 @@
     \item \textbf{Function}: Half-wave rectification followed by RC low-pass filtering. Extracts the envelope of the signal from the mixer. \href{https://www.winlab.rutgers.edu/~crose/322_html/envelope_detector.html}{Reference}
     \item \textbf{Time Constant}: $\tau = R7 \times C2 = \SI{0.47}{\milli\second}$
     \item \textbf{Cutoff Freq.}: $f_c \approx 1/(2\pi\tau) \approx \SI{339}{\hertz}$
-    \item \textbf{Note}: Placement after mixer is unconventional for standard Theremin volume control. And is intentional design choice to avoid using to supress the DC offset curated by the envelope detector.
+    \item \textbf{Note}: Placement after mixer is unconventional for standard Theremin volume control. And is intentional design choice to suppress the DC offset created by the envelope detector.
 \end{itemize}
+
+\end{frame}
+
+\section{Envelope Detector Output}
+\begin{frame}{Envelope Detector Output}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.8\textwidth]{envelopeoutput.jpeg}
+    \caption{Envelope Detector Output}
+\end{figure}
+
 \end{frame}
 
 \begin{frame}{Active Filters}
@@ -206,6 +254,20 @@
     \item \textbf{Cutoff Freq.}: $f_c = \frac{1}{2\pi R10 C3} \approx \SI{2.53}{\kilo\hertz}$
     \item \textbf{Gain}: $G_{DC} = 1 + \frac{R11}{R12} = 1 + \frac{40}{20} = 3$
 \end{itemize}
+
+
+
+\end{frame}
+
+
+
+\section{High Pass Output}
+\begin{frame}{High Pass Output}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{highpass.jpeg}
+    \caption{Filter Stage Output}
+\end{figure}
 \end{frame}
 
 \section{Amplifier Stages}
